@@ -84,13 +84,13 @@
     \begin{tcolorbox}[colback=LightGray,colframe=BorderGray,arc=1mm]
         \begin{center}
             {\large \textbf{OVERALL VERDICT:}}\\[0.2cm]
-            {% if summary.overall_status.value == "PASS" %}
+            <% if summary.overall_status.value == "PASS" %>
                 {\Huge \textbf{\textcolor{PassGreen}{PASS}}}
-            {% elif summary.overall_status.value == "WARNING" %}
+            <% elif summary.overall_status.value == "WARNING" %>
                 {\Huge \textbf{\textcolor{WarnAmber}{WARNING}}}
-            {% else %}
+            <% else %>
                 {\Huge \textbf{\textcolor{FailRed}{FAIL}}}
-            {% endif %}
+            <% endif %>
             \\[0.3cm]
             {\Large \textbf{Validation Index: << summary.validation_score >> / 100}}\\[0.2cm]
             \rule{0.8\textwidth}{0.4pt}\\[0.2cm]
@@ -115,13 +115,13 @@
     \toprule
     \textbf{Physical Channel / KPI} & \textbf{Observed Value} & \textbf{Design Threshold} & \textbf{Compliance} \\
     \midrule
-    Maximum Low-Speed Rotor Speed & << summary.max_rotor_speed_rpm >> RPM & 15.00 RPM & {% if summary.max_rotor_speed_rpm <= 15.00 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
-    Maximum Generator Torque & << summary.max_generator_torque_nm >> Nm & 47,402.9 Nm & {% if summary.max_generator_torque_nm <= 47402.9 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
-    Peak Active Power Output & << summary.max_electrical_power_kw >> kW & 5,500.0 kW & {% if summary.max_electrical_power_kw <= 5500.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
-    Max Power Curve Bin Deviation & << summary.max_power_deviation_pct >>\% & 10.0\% & {% if summary.max_power_deviation_pct <= 10.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{WarnAmber}{\textbf{DEVIATION}}{% endif %} \\
-    Estimated Pitch Actuator Delay & << summary.pitch_response_time_sec >> s & 1.50 s & {% if summary.pitch_response_time_sec <= 1.50 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{EXCESSIVE}}{% endif %} \\
-    Peak Nacelle Yaw Error & << summary.max_yaw_error_deg >>$^\circ$ & 10.0$^\circ$ & {% if summary.max_yaw_error_deg <= 10.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{UNALIGNED}}{% endif %} \\
-    Telemetry Signal Completeness & << summary.signal_completeness_pct >>\% & 99.0\% & {% if summary.signal_completeness_pct >= 99.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{DROPOUT}}{% endif %} \\
+    Maximum Low-Speed Rotor Speed & << summary.max_rotor_speed_rpm >> RPM & 15.00 RPM & <% if summary.max_rotor_speed_rpm <= 15.00 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{BREACH}}<% endif %> \\
+    Maximum Generator Torque & << summary.max_generator_torque_nm >> Nm & 47,402.9 Nm & <% if summary.max_generator_torque_nm <= 47402.9 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{BREACH}}<% endif %> \\
+    Peak Active Power Output & << summary.max_electrical_power_kw >> kW & 5,500.0 kW & <% if summary.max_electrical_power_kw <= 5500.0 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{BREACH}}<% endif %> \\
+    Max Power Curve Bin Deviation & << summary.max_power_deviation_pct >>\% & 10.0\% & <% if summary.max_power_deviation_pct <= 10.0 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{WarnAmber}{\textbf{DEVIATION}}<% endif %> \\
+    Estimated Pitch Actuator Delay & << summary.pitch_response_time_sec >> s & 1.50 s & <% if summary.pitch_response_time_sec <= 1.50 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{EXCESSIVE}}<% endif %> \\
+    Peak Nacelle Yaw Error & << summary.max_yaw_error_deg >>$^\circ$ & 10.0$^\circ$ & <% if summary.max_yaw_error_deg <= 10.0 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{UNALIGNED}}<% endif %> \\
+    Telemetry Signal Completeness & << summary.signal_completeness_pct >>\% & 99.0\% & <% if summary.signal_completeness_pct >= 99.0 %>\textcolor{PassGreen}{\textbf{COMPLIANT}}<% else %>\textcolor{FailRed}{\textbf{DROPOUT}}<% endif %> \\
     \bottomrule
 \end{tabularx}
 \end{table}
@@ -140,19 +140,19 @@
     \toprule
     \textbf{Validator} & \textbf{Status} & \textbf{Metric (Observed vs Limit)} & \textbf{Engineering Finding} \\
     \midrule
-    {% for ev in summary.results %}
+    <% for ev in summary.results %>
     \texttt{<< ev.validator >>} & 
-    {% if ev.status.value == "PASS" %}
+    <% if ev.status.value == "PASS" %>
         \textcolor{PassGreen}{\textbf{PASS}}
-    {% elif ev.status.value == "WARNING" %}
+    <% elif ev.status.value == "WARNING" %>
         \textcolor{WarnAmber}{\textbf{WARN}}
-    {% else %}
+    <% else %>
         \textcolor{FailRed}{\textbf{FAIL}}
-    {% endif %} & 
+    <% endif %> & 
     \textbf{<< ev.metric >>}: << ev.actual >> (Limit: << ev.threshold >>) & 
     << ev.message >> \\
     \midrule
-    {% endfor %}
+    <% endfor %>
     \bottomrule
 \end{tabularx}
 \end{table}
@@ -166,13 +166,13 @@
 
 \noindent
 This technical audit was generated automatically by the \textbf{WindCtrl Validate} engine.
-{% if summary.overall_status.value == "PASS" %}
+<% if summary.overall_status.value == "PASS" %>
 The supervisory controller software demonstrated strict adherence to the aerodynamic, electrical, and structural safety criteria set forth by << config.standard >>. No emergency trip thresholds were exceeded, actuator rate demands remained within operational boundaries, and aerodynamic energy yield tracked within acceptable tolerance margins.
-{% elif summary.overall_status.value == "WARNING" %}
+<% elif summary.overall_status.value == "WARNING" %>
 The controller demonstrated nominal overall operation but flagged advisory warnings. Further investigation is recommended regarding control stability margins or pitch actuation latency prior to final site commissioning.
-{% else %}
+<% else %>
 \textbf{NON-COMPLIANCE NOTICE:} Critical control rule violations or protective trip thresholds were detected during this test sequence. The supervisory controller failed validation checks. Release to production or field turbine deployment is \textbf{REJECTED} pending root-cause investigation.
-{% endif %}
+<% endif %>
 
 \vspace{1.0cm}
 
