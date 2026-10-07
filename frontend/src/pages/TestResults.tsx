@@ -149,9 +149,9 @@ export const TestResults: React.FC<TestResultsProps> = ({ initialRunId }) => {
                   <tr
                     key={idx}
                     className={`hover:bg-slate-50/80 transition-colors ${
-                      ev.status === ValidationStatus.FAIL
+                      ev.status === 'FAIL'
                         ? 'bg-rose-50/30'
-                        : ev.status === ValidationStatus.WARNING
+                        : ev.status === 'WARNING'
                         ? 'bg-amber-50/20'
                         : ''
                     }`}
