@@ -6,10 +6,16 @@ startup, shutdown, and fault injection test benches.
 
 import argparse
 import os
+import sys
 from pathlib import Path
 from typing import Dict, Optional, Tuple
 import numpy as np
 import pandas as pd
+
+# Add repository root to pythonpath
+repo_root = Path(__file__).resolve().parent.parent
+if str(repo_root) not in sys.path:
+    sys.path.insert(0, str(repo_root))
 
 from backend.app.core.config import settings
 from backend.app.services.fault_injection import FaultConfig, FaultInjectionEngine, FaultType
@@ -67,7 +73,7 @@ def simulate_turbine_run(
     pitch_integral = 0.0
 
     gearbox_ratio = settings.turbine.gearbox_ratio  # 97.0
-    rated_rpm = settings.turbine.rated_rotor_rpm    # 12.1
+    rated_rpm = settings.turbine.rated_rotor_speed_rpm    # 12.1
     rated_torque = settings.turbine.rated_generator_torque_nm  # 43093.55
     max_pitch_rate = settings.turbine.max_pitch_rate_dps       # 8.0 deg/s
 
