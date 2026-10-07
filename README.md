@@ -140,13 +140,30 @@ graph TD
 
 The web dashboard is styled following modern industrial design principles (clean surfaces, slate/navy typography, restrained teal accents, dense information hierarchy):
 
-1. **Overview**: Executive validation index (0–100), PASS/WARNING/FAIL badges, real-time KPI cards, and 6 synchronized telemetry charts.
-2. **Signal Explorer**: Interactive multi-channel overlay, downsampling selector (1x to 10x), and point-by-point raw sample inspector with CSV export.
-3. **Validation Runs**: Historical audit registry, run comparisons, execution duration benchmarks, and status filters.
-4. **Test Results**: Structured test-by-test rule verdict matrix displaying observed measurements vs design thresholds and engineering diagnostics.
-5. **Fault Injection**: Interactive engineering workbench to inject synthetic anomalies (overspeed, actuator lag, sensor dropout) and observe live detection.
-6. **Reports Center**: Download formal PDF certification documents and inspect rendered LaTeX sources.
-7. **System Health**: Backend heartbeat probes, NREL 5MW turbine parameter sheet, and subsystem readiness metrics.
+### 7.1 Overview Dashboard & Telemetry Inspection
+Real-time KPI metrics, operational status indicators, and synchronized 6-panel turbine SCADA traces.
+
+![WindCtrl Validate Overview Dashboard](docs/screenshots/dashboard_overview.png)
+
+### 7.2 High-Resolution Multi-Channel Signal Explorer
+Interactive multi-channel signal inspection with variable downsampling (1x to 10x) and raw telemetry data grid.
+
+![Signal Explorer Trace](docs/screenshots/signal_explorer.png)
+
+### 7.3 Validation Audit Runs Registry
+Traceable validation run history with certified scores, pass/warning/fail tallies, and direct report download actions.
+
+![Validation Runs Registry](docs/screenshots/validation_runs.png)
+
+### 7.4 Controlled Fault Injection Workbench
+Interactive test bench to simulate aerodynamic, actuator, and electrical sensor faults with live rule detection verification.
+
+![Fault Injection Workbench](docs/screenshots/fault_injection.png)
+
+### 7.5 Automated Engineering Telemetry Certification Plot
+Multi-panel high-fidelity engineering plots embedded directly into generated certification PDF reports.
+
+![Multi-Panel Telemetry Certification Plot](docs/screenshots/telemetry_analysis.png)
 
 ---
 
