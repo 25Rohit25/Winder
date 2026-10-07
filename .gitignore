@@ -32,11 +32,14 @@ venv/
 ENV/
 env/
 
-# Node / Frontend
+# Node / Frontend / Remotion
 node_modules/
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+video/node_modules/
+video/.remotion/
+video/out/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -91,3 +94,6 @@ Thumbs.db
 # Database
 *.sqlite3
 *.db
+
+# Ad-hoc generated datasets
+data/generated/*.csv

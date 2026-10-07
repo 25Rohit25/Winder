@@ -1,0 +1,23 @@
+{
+  "name": "windctrl-validate-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Programmatic architecture and demo video for WindCtrl Validate built with Remotion",
+  "scripts": {
+    "start": "remotion studio src/index.ts",
+    "build": "remotion render src/index.ts WindCtrlExplainer out/windctrl-validate-explainer.mp4",
+    "render": "remotion render src/index.ts WindCtrlExplainer out/windctrl-validate-explainer.mp4",
+    "still": "remotion still src/index.ts WindCtrlExplainer out/thumbnail.png --frame=300"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.220"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.220",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.6.3"
+  }
+}

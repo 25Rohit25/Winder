@@ -50,6 +50,12 @@ docker-up:
 docker-down:
 	docker compose down
 
+video-start:
+	cd video && $(NPM) start
+
+video-render:
+	cd video && $(NPM) run render
+
 demo: generate-data validate report
 	@echo ""
 	@echo "================================================================="

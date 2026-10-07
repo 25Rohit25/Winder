@@ -165,6 +165,19 @@ Multi-panel high-fidelity engineering plots embedded directly into generated cer
 
 ![Multi-Panel Telemetry Certification Plot](docs/screenshots/telemetry_analysis.png)
 
+### 7.6 Programmatic Architecture Video (Remotion)
+A 45-second animated explainer video built programmatically with **Remotion** (React, TypeScript, and CSS), detailing the turbine overspeed challenge, the 5-stage validation pipeline, exact threshold boundaries, and live SCADA flight-recorder telemetry.
+
+- **Source Code**: [`video/`](video/)
+- **Live Preview in Remotion Studio**:
+  ```bash
+  cd video && npm start
+  ```
+- **Render to 1080p MP4**:
+  ```bash
+  cd video && npm run render
+  ```
+
 ---
 
 ## 8. Example Validation Results
