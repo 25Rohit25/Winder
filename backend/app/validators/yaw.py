@@ -57,9 +57,10 @@ class YawValidator:
 
         # 2. Persistent Misalignment (Long-term Energy Loss & Fatigue)
         dt = float(df["timestamp"].diff().mean()) if "timestamp" in df.columns and len(df) > 1 else 0.05
-        window_size = max(5, int(self.rolling_window_sec / dt))
-        rolling_mean = yaw.rolling(window=window_size, min_periods=window_size // 2).mean().abs()
-        max_persistent = float(rolling_mean.max()) if not rolling_mean.empty else 0.0
+        full_window = max(5, int(self.rolling_window_sec / dt))
+        min_p = max(1, min(len(yaw) // 2, full_window // 2))
+        rolling_mean = yaw.rolling(window=min(full_window, len(yaw)), min_periods=min_p).mean().abs().dropna()
+        max_persistent = float(rolling_mean.max()) if not rolling_mean.empty else float(yaw.abs().mean())
 
         if max_persistent <= self.max_persistent_error_deg:
             p_status = ValidationStatus.PASS
