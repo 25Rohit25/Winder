@@ -66,6 +66,8 @@ reports/generated/*.aux
 reports/generated/*.log
 reports/generated/*.out
 reports/generated/*.toc
+reports/generated/run-*/
+!reports/generated/run-83e8fb71/
 
 # Testing & Coverage
 .pytest_cache/
