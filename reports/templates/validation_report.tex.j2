@@ -1,0 +1,187 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+% Define Industrial Color Palette (Siemens-style Engineering Palette)
+\definecolor{NavyBlue}{RGB}{15, 34, 64}
+\definecolor{TealAccent}{RGB}{0, 114, 153}
+\definecolor{PassGreen}{RGB}{20, 120, 60}
+\definecolor{WarnAmber}{RGB}{190, 110, 0}
+\definecolor{FailRed}{RGB}{180, 25, 25}
+\definecolor{LightGray}{RGB}{245, 247, 250}
+\definecolor{BorderGray}{RGB}{220, 224, 230}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=NavyBlue,
+    urlcolor=TealAccent
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \textbf{WindCtrl Validate} \textbar\ Technical Audit}
+\fancyhead[R]{\small Run ID: \texttt{<< summary.run_id >>}}
+\fancyfoot[L]{\small Certified per << config.standard >>}
+\fancyfoot[R]{\small Page \thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\titleformat{\section}{\large\bfseries\color{NavyBlue}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{TealAccent}}{\thesubsection}{1em}{}
+
+\begin{document}
+
+% ==========================================
+% COVER / TITLE HEADER BLOCK
+% ==========================================
+\begin{tcolorbox}[colback=NavyBlue,colframe=NavyBlue,arc=2mm,boxrule=1pt]
+\begin{center}
+    \vspace{0.3cm}
+    {\Huge \textbf{\textcolor{white}{WIND TURBINE CONTROLLER}}}\\[0.2cm]
+    {\Huge \textbf{\textcolor{white}{VALIDATION REPORT}}}\\[0.4cm]
+    {\large \textcolor{white}{Automated Verification \& Supervisory Control Audit Toolkit}}\\[0.2cm]
+    \textcolor{white}{\rule{0.8\textwidth}{0.5pt}}\\[0.3cm]
+    {\normalsize \textcolor{white}{\textbf{Standard Benchmark:} << config.standard >>}}
+    \vspace{0.3cm}
+\end{center}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+% ==========================================
+% EXECUTIVE RUN METADATA & VERDICT
+% ==========================================
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \section*{Audit Metadata}
+    \begin{tabularx}{\textwidth}{lX}
+        \toprule
+        \textbf{Property} & \textbf{Specification} \\
+        \midrule
+        \textbf{Run Identifier:} & \texttt{<< summary.run_id >>} \\
+        \textbf{Telemetry Source:} & \texttt{<< summary.dataset_name >>} \\
+        \textbf{Scenario Class:} & \texttt{<< summary.scenario_type >>} \\
+        \textbf{Turbine Model:} & << config.turbine_model >> \\
+        \textbf{Organization:} & << config.organization >> \\
+        \textbf{Lead Engineer:} & << config.author >> \\
+        \textbf{Timestamp (UTC):} & << summary.timestamp >> \\
+        \textbf{Execution Duration:} & << summary.execution_duration_ms >> ms \\
+        \bottomrule
+    \end{tabularx}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \section*{Executive Summary}
+    \begin{tcolorbox}[colback=LightGray,colframe=BorderGray,arc=1mm]
+        \begin{center}
+            {\large \textbf{OVERALL VERDICT:}}\\[0.2cm]
+            {% if summary.overall_status.value == "PASS" %}
+                {\Huge \textbf{\textcolor{PassGreen}{PASS}}}
+            {% elif summary.overall_status.value == "WARNING" %}
+                {\Huge \textbf{\textcolor{WarnAmber}{WARNING}}}
+            {% else %}
+                {\Huge \textbf{\textcolor{FailRed}{FAIL}}}
+            {% endif %}
+            \\[0.3cm]
+            {\Large \textbf{Validation Index: << summary.validation_score >> / 100}}\\[0.2cm]
+            \rule{0.8\textwidth}{0.4pt}\\[0.2cm]
+            \textbf{Total Rules Evaluated:} << summary.total_tests >>\\
+            \textbf{Passed:} \textcolor{PassGreen}{<< summary.passed_count >>} \quad
+            \textbf{Warnings:} \textcolor{WarnAmber}{<< summary.warning_count >>} \quad
+            \textbf{Failed:} \textcolor{FailRed}{<< summary.failed_count >>}
+        \end{center}
+    \end{tcolorbox}
+\end{minipage}
+
+\vspace{0.6cm}
+
+% ==========================================
+% KEY PERFORMANCE INDICATORS (KPIs)
+% ==========================================
+\section{Engineering Physical Key Performance Indicators}
+
+\begin{table}[h!]
+\centering
+\begin{tabularx}{\textwidth}{Xrrr}
+    \toprule
+    \textbf{Physical Channel / KPI} & \textbf{Observed Value} & \textbf{Design Threshold} & \textbf{Compliance} \\
+    \midrule
+    Maximum Low-Speed Rotor Speed & << summary.max_rotor_speed_rpm >> RPM & 15.00 RPM & {% if summary.max_rotor_speed_rpm <= 15.00 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
+    Maximum Generator Torque & << summary.max_generator_torque_nm >> Nm & 47,402.9 Nm & {% if summary.max_generator_torque_nm <= 47402.9 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
+    Peak Active Power Output & << summary.max_electrical_power_kw >> kW & 5,500.0 kW & {% if summary.max_electrical_power_kw <= 5500.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{BREACH}}{% endif %} \\
+    Max Power Curve Bin Deviation & << summary.max_power_deviation_pct >>\% & 10.0\% & {% if summary.max_power_deviation_pct <= 10.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{WarnAmber}{\textbf{DEVIATION}}{% endif %} \\
+    Estimated Pitch Actuator Delay & << summary.pitch_response_time_sec >> s & 1.50 s & {% if summary.pitch_response_time_sec <= 1.50 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{EXCESSIVE}}{% endif %} \\
+    Peak Nacelle Yaw Error & << summary.max_yaw_error_deg >>$^\circ$ & 10.0$^\circ$ & {% if summary.max_yaw_error_deg <= 10.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{UNALIGNED}}{% endif %} \\
+    Telemetry Signal Completeness & << summary.signal_completeness_pct >>\% & 99.0\% & {% if summary.signal_completeness_pct >= 99.0 %}\textcolor{PassGreen}{\textbf{COMPLIANT}}{% else %}\textcolor{FailRed}{\textbf{DROPOUT}}{% endif %} \\
+    \bottomrule
+\end{tabularx}
+\end{table}
+
+\vspace{0.4cm}
+
+% ==========================================
+% DETAILED VALIDATION EVIDENCE AUDIT
+% ==========================================
+\section{Test-by-Test Structured Evidence Matrix}
+
+\begin{table}[h!]
+\small
+\centering
+\begin{tabularx}{\textwidth}{lcp{3.5cm}X}
+    \toprule
+    \textbf{Validator} & \textbf{Status} & \textbf{Metric (Observed vs Limit)} & \textbf{Engineering Finding} \\
+    \midrule
+    {% for ev in summary.results %}
+    \texttt{<< ev.validator >>} & 
+    {% if ev.status.value == "PASS" %}
+        \textcolor{PassGreen}{\textbf{PASS}}
+    {% elif ev.status.value == "WARNING" %}
+        \textcolor{WarnAmber}{\textbf{WARN}}
+    {% else %}
+        \textcolor{FailRed}{\textbf{FAIL}}
+    {% endif %} & 
+    \textbf{<< ev.metric >>}: << ev.actual >> (Limit: << ev.threshold >>) & 
+    << ev.message >> \\
+    \midrule
+    {% endfor %}
+    \bottomrule
+\end{tabularx}
+\end{table}
+
+\vspace{0.4cm}
+
+% ==========================================
+% ENGINEERING CONCLUSION & SIGN-OFF
+% ==========================================
+\section{Certification Findings and Conclusion}
+
+\noindent
+This technical audit was generated automatically by the \textbf{WindCtrl Validate} engine.
+{% if summary.overall_status.value == "PASS" %}
+The supervisory controller software demonstrated strict adherence to the aerodynamic, electrical, and structural safety criteria set forth by << config.standard >>. No emergency trip thresholds were exceeded, actuator rate demands remained within operational boundaries, and aerodynamic energy yield tracked within acceptable tolerance margins.
+{% elif summary.overall_status.value == "WARNING" %}
+The controller demonstrated nominal overall operation but flagged advisory warnings. Further investigation is recommended regarding control stability margins or pitch actuation latency prior to final site commissioning.
+{% else %}
+\textbf{NON-COMPLIANCE NOTICE:} Critical control rule violations or protective trip thresholds were detected during this test sequence. The supervisory controller failed validation checks. Release to production or field turbine deployment is \textbf{REJECTED} pending root-cause investigation.
+{% endif %}
+
+\vspace{1.0cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{Xp{6.0cm}}
+    \textbf{Controls Validation Lead:} & \hrulefill \\
+    & \small << config.author >> \\
+    \textbf{Audit Date:} & \small << summary.timestamp >> \\
+    \textbf{Certification Authority:} & \small << config.organization >>
+\end{tabularx}
+
+\end{document}
